@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
+import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -87,6 +88,14 @@ public class TriStateToggleButton extends View{
 	private int spotColor = Color.parseColor("#ffffff");
 	/** 边框颜色*/	// Border color
 	private int borderColor = offBorderColor;
+    /** 透明百分比*/	// transparent percentage
+	private int disableAlphaPercent = 50;
+	private int alpha;
+	private int onColorDisabled;
+	private int offColorDisabled;
+	private int midColorDisabled;
+	private int spotColorDisabled;
+	private int borderColorDisabled;
 	/** 画笔*/		// brush
 	private Paint paint ;
 	/** 开关状态*/	// switch status
@@ -219,6 +228,7 @@ public class TriStateToggleButton extends View{
 		midColor = typedArray.getColor(R.styleable.TriStateToggleButton_tbMidColor, midColor);
 		borderWidth = typedArray.getDimensionPixelSize(R.styleable.TriStateToggleButton_tbBorderWidth, borderWidth);
 		defaultAnimate = typedArray.getBoolean(R.styleable.TriStateToggleButton_tbAnimate, defaultAnimate);
+		disableAlphaPercent = typedArray.getInt(R.styleable.TriStateToggleButton_tbDisableAlphaPercent, disableAlphaPercent);
 		// Beppi: modified defaultStatus from boolean to DefaultStatus
 //		defaultStatus = typedArray.getBoolean(R.styleable.ToggleButton_tbDefaultStatus, defaultStatus);
 		defaultStatus = attrToStatus(typedArray.getString(R.styleable.TriStateToggleButton_tbDefaultStatus));
@@ -251,6 +261,7 @@ public class TriStateToggleButton extends View{
 	// Beppi: modified to iterate on the 3 values instead of switching between two
 	public void toggle(boolean animate) {
 //		toggleStatus = !toggleStatus;
+		if (!enabled) return;
 		if (midSelectable)
 			switch (toggleStatus) {
 				case off: putValueInToggleStatus(mid); break;
@@ -293,7 +304,6 @@ public class TriStateToggleButton extends View{
 	}
 
 	private void putValueInToggleStatus(ToggleStatus value) {
-		if (!enabled) return;
 		previousToggleStatus = toggleStatus;
 		toggleStatus = value;
 	}
@@ -477,29 +487,38 @@ public class TriStateToggleButton extends View{
 		return Math.min(Math.max(value, low), high);
 	}
 
+	private void fadeDisabledButton(){
+		alpha = Math.round(disableAlphaPercent * 255 / 100.0f);
+		onColorDisabled = ColorUtils.setAlphaComponent(onColor, alpha);
+		offColorDisabled = ColorUtils.setAlphaComponent(offColor, alpha);
+		midColorDisabled = ColorUtils.setAlphaComponent(midColor, alpha);
+		spotColorDisabled = ColorUtils.setAlphaComponent(spotColor, alpha);
+		borderColorDisabled = ColorUtils.setAlphaComponent(borderColor, alpha);
+	}
 	
 	@Override
 	public void draw(Canvas canvas) {
 		rect.set(0, 0, getWidth(), getHeight());
-		paint.setColor(borderColor);
+		paint.setColor(enabled ? borderColor : borderColorDisabled);
 		canvas.drawRoundRect(rect, radius, radius, paint);
 		
 		if(offLineWidth > 0){
 			final float cy = offLineWidth * 0.5f;
 			rect.set(spotX - cy, centerY - cy, endX + cy, centerY + cy);
-			paint.setColor(enabled ? (toggleStatus == mid ? midColor : offColor) : disabledColor);
+			paint.setColor( enabled ? (toggleStatus == mid ? midColor : offColor) : (toggleStatus == mid ? midColorDisabled : offColorDisabled));
 			canvas.drawRoundRect(rect, cy, cy, paint);
 		}
 		
 		rect.set(spotX - 1 - radius, centerY - radius, spotX + 1.1f + radius, centerY + radius);
-		paint.setColor(enabled ? borderColor : disabledColor);
+		paint.setColor(enabled ? borderColor : borderColorDisabled);
 		canvas.drawRoundRect(rect, radius, radius, paint);
 		
 		final float spotR = spotSize * 0.5f;
 		rect.set(spotX - spotR, centerY - spotR, spotX + spotR, centerY + spotR);
-		paint.setColor(enabled ? spotColor : disabledColor);
+		paint.setColor(enabled ? spotColor : spotColorDisabled);
 		canvas.drawRoundRect(rect, spotR, spotR, paint);
-		
+
+		super.draw(canvas);
 	}
 	
 	/**
@@ -588,6 +607,7 @@ public class TriStateToggleButton extends View{
 
 		borderColor = Color.rgb(springR, springG, springB);
 
+		fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -624,6 +644,7 @@ public class TriStateToggleButton extends View{
 
 	public void setOnColor(int onColor) {
 		this.onColor = onColor;
+		fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -633,6 +654,7 @@ public class TriStateToggleButton extends View{
 
 	public void setOffBorderColor(int offBorderColor) {
 		this.offBorderColor = offBorderColor;
+		fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -642,6 +664,7 @@ public class TriStateToggleButton extends View{
 
 	public void setOffColor(int offColor) {
 		this.offColor = offColor;
+		fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -651,6 +674,7 @@ public class TriStateToggleButton extends View{
 
 	public void setMidColor(int midColor) {
 		this.midColor = midColor;
+		fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -660,6 +684,7 @@ public class TriStateToggleButton extends View{
 
 	public void setSpotColor(int spotColor) {
 		this.spotColor = spotColor;
+		fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -669,8 +694,19 @@ public class TriStateToggleButton extends View{
 
 	public void setBorderColor(int borderColor) {
 		this.borderColor = borderColor;
+		fadeDisabledButton();
 		postInvalidate();
 	}
+
+    public int getDisableAlphaPercent() {
+        return disableAlphaPercent;
+    }
+
+    public void setDisableAlphaPercent(int disableAlphaPercent) {
+        this.disableAlphaPercent = disableAlphaPercent;
+        fadeDisabledButton();
+        postInvalidate();
+    }
 
 	public ToggleStatus getToggleStatus() {
 		return toggleStatus;
