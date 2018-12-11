@@ -487,15 +487,6 @@ public class TriStateToggleButton extends View{
 	private int clamp(int value, int low, int high) {
 		return Math.min(Math.max(value, low), high);
 	}
-
-	private void fadeDisabledButton(){
-		int alpha = Math.round(disableAlphaPercent * 255 / 100.0f);
-		onColorDisabled = ColorUtils.setAlphaComponent(onColor, alpha);
-		offColorDisabled = ColorUtils.setAlphaComponent(offColor, alpha);
-		midColorDisabled = ColorUtils.setAlphaComponent(midColor, alpha);
-		spotColorDisabled =spotColor;
-		borderColorDisabled = ColorUtils.setAlphaComponent(borderColor, alpha);
-	}
 	
 	@Override
 	public void draw(Canvas canvas) {
@@ -615,7 +606,6 @@ public class TriStateToggleButton extends View{
 
 		borderColor = Color.rgb(springR, springG, springB);
 
-		//fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -652,7 +642,6 @@ public class TriStateToggleButton extends View{
 
 	public void setOnColor(int onColor) {
 		this.onColor = onColor;
-		//fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -662,7 +651,6 @@ public class TriStateToggleButton extends View{
 
 	public void setOffBorderColor(int offBorderColor) {
 		this.offBorderColor = offBorderColor;
-		//fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -672,7 +660,6 @@ public class TriStateToggleButton extends View{
 
 	public void setOffColor(int offColor) {
 		this.offColor = offColor;
-		//fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -682,7 +669,6 @@ public class TriStateToggleButton extends View{
 
 	public void setMidColor(int midColor) {
 		this.midColor = midColor;
-		//fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -692,7 +678,6 @@ public class TriStateToggleButton extends View{
 
 	public void setSpotColor(int spotColor) {
 		this.spotColor = spotColor;
-		//fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -702,7 +687,6 @@ public class TriStateToggleButton extends View{
 
 	public void setBorderColor(int borderColor) {
 		this.borderColor = borderColor;
-		//fadeDisabledButton();
 		postInvalidate();
 	}
 
@@ -712,7 +696,6 @@ public class TriStateToggleButton extends View{
 
     public void setDisableAlphaPercent(int disableAlphaPercent) {
         this.disableAlphaPercent = disableAlphaPercent;
-        //fadeDisabledButton();
         postInvalidate();
     }
 
