@@ -90,7 +90,6 @@ public class TriStateToggleButton extends View{
 	private int borderColor = offBorderColor;
     /** 透明百分比*/	// transparent percentage
 	private int disableAlphaPercent = 50;
-	private int alpha;
 	private int onColorDisabled;
 	private int offColorDisabled;
 	private int midColorDisabled;
@@ -488,7 +487,7 @@ public class TriStateToggleButton extends View{
 	}
 
 	private void fadeDisabledButton(){
-		alpha = Math.round(disableAlphaPercent * 255 / 100.0f);
+		int alpha = Math.round(disableAlphaPercent * 255 / 100.0f);
 		onColorDisabled = ColorUtils.setAlphaComponent(onColor, alpha);
 		offColorDisabled = ColorUtils.setAlphaComponent(offColor, alpha);
 		midColorDisabled = ColorUtils.setAlphaComponent(midColor, alpha);
