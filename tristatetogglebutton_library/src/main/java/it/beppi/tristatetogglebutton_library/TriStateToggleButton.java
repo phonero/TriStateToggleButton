@@ -491,7 +491,7 @@ public class TriStateToggleButton extends View{
 		onColorDisabled = ColorUtils.setAlphaComponent(onColor, alpha);
 		offColorDisabled = ColorUtils.setAlphaComponent(offColor, alpha);
 		midColorDisabled = ColorUtils.setAlphaComponent(midColor, alpha);
-		spotColorDisabled = ColorUtils.setAlphaComponent(spotColor, alpha);
+		spotColorDisabled =spotColor;
 		borderColorDisabled = ColorUtils.setAlphaComponent(borderColor, alpha);
 	}
 	
