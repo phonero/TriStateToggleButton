@@ -7,6 +7,7 @@
         <attr name="tbMidColor" format="reference|color"/>
         <attr name="tbOnColor" format="reference|color"/>
         <attr name="tbSpotColor" format="reference|color"/>
+        <attr name="tbDisableAlphaPercent" format="integer"/>
         <attr name="tbAnimate" format="reference|boolean"/>
         <attr name="tbDefaultStatus">
             <enum name="off" value="0"/>
