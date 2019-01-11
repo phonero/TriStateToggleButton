@@ -472,7 +472,8 @@ public class TriStateToggleButton extends View{
 		// Beppi: changed management of the position according to 3 states
 //		spotX = toggleStatus ? spotMaxX : spotMinX;
 		spotX = toggleStatus == on ? spotMaxX : toggleStatus == off ? spotMinX : spotMidX;
-		offLineWidth = 0;
+		//offLineWidth = 0;
+        offLineWidth = toggleStatus == on ? 0 : spotSize;
 	}
 	
 	
@@ -497,10 +498,12 @@ public class TriStateToggleButton extends View{
 		spotColorDisabled =spotColor;
 		borderColorDisabled = ColorUtils.setAlphaComponent(borderColor, alpha);
 
+        // Drawing background with edge - gray or green
 		rect.set(0, 0, getWidth(), getHeight());
 		paint.setColor(enabled ? borderColor : borderColorDisabled);
 		canvas.drawRoundRect(rect, radius, radius, paint);
-		
+
+        // drawing a new inside color of the background - green or white
 		if(offLineWidth > 0){
 			final float cy = offLineWidth * 0.5f;
 			rect.set(spotX - cy, centerY - cy, endX + cy, centerY + cy);
