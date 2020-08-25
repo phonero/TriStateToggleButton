@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TriStateToggleButton.iml" filepath="$PROJECT_DIR$/TriStateToggleButton.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tristatetogglebutton_library/TriStateToggleButton-tristatetogglebutton_library.iml" filepath="$PROJECT_DIR$/.idea/modules/tristatetogglebutton_library/TriStateToggleButton-tristatetogglebutton_library.iml" group="TriStateToggleButton/tristatetogglebutton_library" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tristatetogglebutton_sample/TriStateToggleButton-tristatetogglebutton_sample.iml" filepath="$PROJECT_DIR$/.idea/modules/tristatetogglebutton_sample/TriStateToggleButton-tristatetogglebutton_sample.iml" group="TriStateToggleButton/tristatetogglebutton_sample" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/github.phonero-TriStateToggleButton.iml" filepath="$PROJECT_DIR$/.idea/modules/github.phonero-TriStateToggleButton.iml" group="TriStateToggleButton" />
       <module fileurl="file://$PROJECT_DIR$/tristatetogglebutton_library/tristatetogglebutton_library.iml" filepath="$PROJECT_DIR$/tristatetogglebutton_library/tristatetogglebutton_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/tristatetogglebutton_sample/tristatetogglebutton_sample.iml" filepath="$PROJECT_DIR$/tristatetogglebutton_sample/tristatetogglebutton_sample.iml" />
     </modules>
